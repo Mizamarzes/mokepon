@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>JUEGO</title>
+    <link rel = "stylesheet" href ="estilo.css">    
+</head>
+<body>
+    <div class="title-principal">
+        <h1 id= "titlePrincipal" class= "titulo"> Boxing gym</h1>      
+        <h2 id="eligePeleador" class= "recuadro-elige">Elige:</h2>
+    </div>  
+
+        <section id="seleccionar-boxeador">
+            <div>
+                <img src ="./photos/ippo.webp" alt ="Ippo" width="300">       
+                <input type="radio" name="boxeador" id="Ippo" />
+                <label class= "item" for="Ippo">Ippo </label> 
+            </div>
+            <div>
+                <img src ="./photos/takamura.webp" alt ="Takamura" width="300">
+                <input type="radio" name="boxeador" id="Takamura" />    
+                <label class= "item" for="Takamura">Takamura</label>
+            </div>
+            <div> 
+                <img src ="./photos/miyata.webp" alt ="Miyata" width="305">
+                <input type="radio" name="boxeador" id="Miyata" />
+                <label class= "item" for="Miyata">Miyata</label>
+            </div>   
+        </section>
+
+            <div class="boton-seleccionar-config">         
+                <button class="diseñoBoton-seleccionar" id="boton-seleccionar">Seleccionar</button>
+            </div>   
+
+        <section id="seleccionar-ataque">
+            <h2 class="recuadro-ataca">Selecciona tu ataque:</h2>
+
+            <div class="tipos-ataques">
+                <button class = "botonAtaqueDiseño" id="boton-uppercut"> Uppercut</button>    
+                <button class = "botonAtaqueDiseño" id="boton-contraataque"> Contraataque</button>
+                <button class = "botonAtaqueDiseño" id="boton-jab"> Jab</button>
+            </div>
+
+            <div id="mensajes">
+                <p id="resultado">!Mucha Suerte¡</p>   
+            </div>
+
+            <section id="reiniciar">
+                <button class = "volver-ajugar">Volver a Jugar</button>
+            </section>
+
+            <div class="ataques-insanos">
+                    <div class="ataques-jugador">
+                        <p class="mensajes-ataques" id="vidas-jugador">3💗</p>
+                        <p class="mensajes-ataques" id="boxeador-jugador"></p>    
+                        <div class="mensajes-ataques" id="ataques-del-jugador"></div>
+                    </div>
+                
+                    <div class="ataques-enemigo">
+                        <p class="mensajes-ataques" id="vidas-enemigo">3💗</p>
+                        <p class="mensajes-ataques" id="boxeador-enemigo"></p>
+                    <div class="mensajes-ataques" id="ataques-del-enemigo"></div>
+                    </div>
+                </div>
+            </section>
+        <script src = "./js/mokepon.js"></script>    
+    </body>
+</html>

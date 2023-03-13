@@ -1,14 +1,11 @@
 const sectionAtaque = document.getElementById("seleccionar-ataque")
 const sectionVolver = document.getElementById("reiniciar")
 const botonSeleccionar = document.getElementById("boton-seleccionar") 
-const botonJab = document.getElementById("boton-jab")
-const botonUppercut = document.getElementById("boton-uppercut")
-const botonContraataque = document.getElementById("boton-contraataque")
 
 const spanMascotaJugador = document.getElementById("boxeador-jugador")
 const sectiontitle = document.getElementById("titlePrincipal")
 const sectionelige = document.getElementById("eligePeleador")
-const sectionMascota = document.getElementById("seleccionar-boxeador")
+const sectionMascota = document.getElementById("seleccionarBoxeador")
 const sectionseleccion = document.getElementById("boton-seleccionar")
 
 const spanMascotaEnemigo = document.getElementById("boxeador-enemigo")
@@ -22,17 +19,30 @@ const ataquesDelEnemigo = document.getElementById("ataques-del-enemigo")
 const sectionMensajes = document.getElementById("resultado")
 const botonReiniciar = document.getElementById("reiniciar")
 
+const contenedorTarjetas = document.getElementById("seleccionarBoxeador")
+const contenedorAtaques = document.getElementById("contenedorAtaques")
+
 let boxeadores = []
-let ataqueJugador
+let ataqueJugador = []
 let ataqueEnemigo
+let opcionDeBoxeadores 
+let inputIppo
+let inputTakamura
+let inputMiyata
+let boxeadorJugador
+let ataquesboxeadores
+let botonJab 
+let botonUppercut 
+let botonContraataque
+let botones = [] 
 let vidasJugador = 3
 let vidasEnemigo = 3
 
 class Boxeadores{
-    constructor(nombre, foto, vida){
+    constructor(nombre, foto, vidas){
         this.nombre = nombre
         this.foto = foto
-        this.vida = vida
+        this.vidas = vidas
         this.ataques = []
     }
 }
@@ -50,10 +60,10 @@ ippo.ataques.push(
 )
 
 takamura.ataques.push(
-    {nombre: "Uppercut", id: "boton-uppercut"},  
-    {nombre: "Uppercut", id: "boton-uppercut"},
-    {nombre: "Uppercut", id: "boton-uppercut"},  
+    {nombre: "Contraataque", id: "boton-contraataque"},  
     {nombre: "Contraataque", id: "boton-contraataque"},
+    {nombre: "Contraataque", id: "boton-contraataque"},  
+    {nombre: "Uppercut", id: "boton-uppercut"},
     {nombre: "Jab", id: "boton-jab"},      
 )
 
@@ -65,14 +75,32 @@ miyata.ataques.push(
     {nombre: "Contraataque", id: "boton-contraataque"},      
 )
 
+boxeadores.push(ippo,takamura,miyata)
+
 function iniciarjuego(){
+
+    boxeadores.forEach((boxeador) =>{
+       opcionDeBoxeadores = `
+       <div>  
+       <img src =${boxeador.foto} alt =${boxeador.nombre} width="320">       
+       <input type="radio" name="boxeador" id=${boxeador.nombre} />
+       <label class= "item" for=${boxeador.nombre}>${boxeador.nombre}</label>
+       </div>
+       `
+    seleccionarBoxeador.innerHTML += opcionDeBoxeadores
+
+        inputIppo = document.getElementById("Ippo")
+        inputTakamura = document.getElementById("Takamura")
+        inputMiyata = document.getElementById("Miyata")
+   
+
+    })
+
     sectionAtaque.style.display = "none"
     sectionVolver.style.display = "none"
     botonSeleccionar.addEventListener("click",seleccionar)
-    botonUppercut.addEventListener("click", ataqueUppercut)
-    botonContraataque.addEventListener("click", ataqueContraataque)
-    botonJab.addEventListener("click", ataqueJab)
     botonReiniciar.addEventListener("click", reiniciarGame) 
+    
 }
 
 function seleccionar(){
@@ -82,52 +110,83 @@ function seleccionar(){
     sectionseleccion.style.display = "none"
     sectionAtaque.style.display = "flex"
 
-    if (document.getElementById("Ippo").checked){
-        spanMascotaJugador.innerHTML = "Ippo"
+    if (inputIppo.checked){
+        spanMascotaJugador.innerHTML = inputIppo.id
+        boxeadorJugador = inputIppo.id
     }
-    else if (document.getElementById("Takamura").checked){      
-        spanMascotaJugador.innerHTML = "Takamura"
+    else if (inputTakamura.checked){      
+        spanMascotaJugador.innerHTML = inputTakamura.id
+        boxeadorJugador = inputTakamura.id
     }
-    else if (document.getElementById("Miyata").checked){        
-        spanMascotaJugador.innerHTML = "Miyata"    
+    else if (inputMiyata.checked){        
+        spanMascotaJugador.innerHTML = inputMiyata.id   
+        boxeadorJugador = inputMiyata.id 
 
     }else{
         alert("No has seleccionado aun")
         reiniciarGame()
     }
+    extraerAtaques(boxeadorJugador)
     seleccionarEnemigo()
 }
 
-function seleccionarEnemigo(){
-    let numrandom = aleatorio(1,3)
+function extraerAtaques(boxeadorJugador){
+    let ataques
+    for (let i = 0; i < boxeadores.length; i++) {
+        if (boxeadorJugador === boxeadores[i].nombre) {
+            ataques = boxeadores[i].ataques
+        }
+       
+        
+    }
+    mostrarAtaques(ataques)
+}
 
-    if (numrandom == 1) {
-        spanMascotaEnemigo.innerHTML = "Ippo"
-    } else if(numrandom == 2) {
-        spanMascotaEnemigo.innerHTML = "Takamura"
-    } else {
-        spanMascotaEnemigo.innerHTML = "Miyata"
-    }   
+function mostrarAtaques(ataques){
+    ataques.forEach((ataque) =>{
+        ataquesboxeadores = `
+        <button id= ${ataque.id} class = "botonAtaqueDiseño BAtaque" >${ataque.nombre}</button>    
+        `
+        contenedorAtaques.innerHTML += ataquesboxeadores 
+    })
+    botonUppercut = document.getElementById("boton-uppercut")
+    botonContraataque = document.getElementById("boton-contraataque")
+    botonJab = document.getElementById("boton-jab")
+    botones = document.querySelectorAll(".BAtaque")
+}
+
+function secuenciaAtaque(){
+    botones.forEach((boton) =>{
+        boton.addEventListener("click", (e) =>{
+            if (e.target.textContent === "Uppercut") {
+                ataqueJugador.push("Uppercut")
+                console.log(ataqueJugador)
+                boton.style.background = "#112f58"    
+            } else if(e.target.textContent === "Contraataque"){
+                ataqueJugador.push("Contraataque")
+                console.log(ataqueJugador)
+                boton.style.background = "#112f58"  
+            } else{
+                ataqueJugador.push("Jab")
+                console.log(ataqueJugador)
+                boton.style.background = "#112f58"  
+            }
+        })
+    })
+}
+
+function seleccionarEnemigo(){
+    let numrandom = aleatorio(0,boxeadores.length-1)
+
+    spanMascotaEnemigo.innerHTML = boxeadores[numrandom].nombre
+    secuenciaAtaque()
 }
 
 function aleatorio(min,max){
     return Math.floor(Math.random()*(max - min + 1)+ min)
 }
 
-function ataqueUppercut(){
-    ataqueJugador = "Uppercut"
-    ataqueRandomDelEnemigo()
-}
 
-function ataqueContraataque(){
-    ataqueJugador = "Contraataque"
-    ataqueRandomDelEnemigo()
-}    
-
-function ataqueJab(){
-    ataqueJugador = "Jab"
-    ataqueRandomDelEnemigo()
-}
 
 function ataqueRandomDelEnemigo(){
     let ataqueAleatorio = aleatorio(1,3)

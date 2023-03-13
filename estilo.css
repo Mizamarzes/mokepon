@@ -1,14 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka+One&display=swap');
+:root{
+    --color-background:black;
+    --color-primary:darkred;
+    --color-secundary:gainsboro;
+}
+
+
 body{
     font-family: 'Bangers', cursive;
+    background-color: var(--color-fondo);
     background-image: url(/photos/2008406.jpg);
-    background-color: black;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
     background-position: center center;
     margin: 0;
-    
 
 }
 
@@ -25,9 +31,9 @@ body{
     border-radius: 20px;
     margin-top: 10px;
     margin: 1%;
-    border: 3px solid black;
-    color: darkred;
-    background-color: gainsboro; 
+    border: 3px solid var(--color-background);
+    color: var(--color-primary);
+    background-color: var(--color-secundary); 
     display: flex;
     justify-content: center;
 }
@@ -37,29 +43,30 @@ body{
     font-size: 40px;
     border-radius: 20px;
     margin-top: 5px;
-    border: 3px solid black;
-    color: darkred;
-    background-color: gainsboro;
+    border: 3px solid var(--color-background);
+    color: var(--color-primary);
+    background-color: var(--color-secundary);
     display: flex;
     justify-content: center;
 }
 
-#seleccionar-boxeador{
-    display: flex;
+.seleccionar-boxeador-css{
+    display: flex;    
     justify-content: center;
+    align-items: center;
 }
 
 .item{
     width: 260px;
-    font-size: 40px;
-    margin-top: 5px;
+    height: 100%;
+    font-size: 32px;
     border-radius: 10px;
-    border: 3px solid black;
-    color: darkred;
-    background-color: gainsboro;
+    padding: 5px;
+    border: 3px solid var(--color-background);
+    color: var(--color-primary);
+    background-color: var(--color-secundary);
     display: flex;
     justify-content: center;
-    
 }
 
  .diseñoBoton-seleccionar{
@@ -68,8 +75,8 @@ body{
     border-radius: 20px;
     margin-top: 18px;
     font-family: 'Bangers',cursive;
-    background-color: gainsboro;
-    color: darkred;
+    background-color: var(--color-secundary);
+    color: var(--color-primary);
 }
 
 #seleccionar-ataque{
@@ -85,8 +92,8 @@ body{
     padding: 10px;
     font-family: 'Bangers', cursive;
     border: 3px solid black;
-    color: darkred;
-    background-color: gainsboro;
+    color: var(--color-primary);
+    background-color: var(--color-secundary);
     display: flex;
     justify-content: center;
    
@@ -100,8 +107,8 @@ body{
     border-radius: 20px;
     font-family: 'Bangers', cursive;
     border: 2px solid black;
-    background-color: gainsboro;
-    color: darkred;
+    background-color: var(--color-secundary);
+    color: var(--color-primary);
     
 }
 
@@ -113,9 +120,9 @@ body{
     border-radius: 20px;
     font-size: 40px;
     font-family: 'Bangers',cursive;
-    border: 3px solid black;
+    border: 3px solid var(--color-background);
     color: green;
-    background-color: gainsboro;
+    background-color: var(--color-secundary);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -128,7 +135,7 @@ body{
     border-radius: 20px;
     font-family: 'Bangers',cursive;
     color: purple;
-    background-color: gainsboro; 
+    background-color: var(--color-secundary); 
 }
 
 .ataques-insanos{
@@ -137,8 +144,8 @@ body{
     grid-template-columns: 200px 200px;
     border-radius: 10px;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    border: 2px solid black;
-    background-color: gainsboro;
+    border: 2px solid var(--color-background);
+    background-color: var(--color-secundary);
     display: grid;  
 }
 
@@ -149,7 +156,7 @@ body{
 }
 
 .mensajes-ataques{
-    color: darkred;
+    color: var(--color-primary);
     font-size: 20px;
     margin: 0;
 }

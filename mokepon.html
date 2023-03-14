@@ -17,7 +17,22 @@
 
         <div class="boton-seleccionar-config">         
             <button class="diseñoBoton-seleccionar" id="boton-seleccionar">Seleccionar</button>
-        </div>   
+        </div>
+        
+        <section id="ver-mapa">
+            <h1 class= "title-canvas"> Recorre el mapa con tu boxeador</h1>
+        <div class="mapa-botones">
+            <div class="botones-movimiento">
+                <button id="botonArriba" onmouseup="detenerMovimiento()" onmousedown="moverArriba()" >Arriba</button>
+                <div>
+                    <button id="botonIzquierda" onmouseup="detenerMovimiento()" onmousedown="moverIzquierda()">Izquierda</button>
+                    <button id="botonDerecha" onmouseup="detenerMovimiento()" onmousedown="moverDerecha()">Derecha</button>
+                </div>
+                <button id="botonAbajo" onmouseup="detenerMovimiento()" onmousedown="moverAbajo()" >Abajo</button>
+            </div>
+            <canvas id="map"></canvas>
+        </div>
+        </section>
 
         <section id="seleccionar-ataque">
             <h2 class="recuadro-ataca">Selecciona tu ataque:</h2>
@@ -36,13 +51,13 @@
 
             <div class="ataques-insanos">
                     <div class="ataques-jugador">
-                        <p class="mensajes-ataques" id="vidas-jugador">3💗</p>
+                        <p class="mensajes-ataques" id="vidas-jugador">0</p>
                         <p class="mensajes-ataques" id="boxeador-jugador"></p>    
                         <div class="mensajes-ataques" id="ataques-del-jugador"></div>
                     </div>
                 
                     <div class="ataques-enemigo">
-                        <p class="mensajes-ataques" id="vidas-enemigo">3💗</p>
+                        <p class="mensajes-ataques" id="vidas-enemigo">0</p>
                         <p class="mensajes-ataques" id="boxeador-enemigo"></p>
                     <div class="mensajes-ataques" id="ataques-del-enemigo"></div>
                     </div>

@@ -1,21 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka+One&display=swap');
 :root{
-    --color-background:black;
+    --color-background:#000000;
     --color-primary:darkred;
     --color-secundary:gainsboro;
+    --color-fondo: #000000;
 }
 
-
-body{
-    font-family: 'Bangers', cursive;
-    background-color: var(--color-fondo);
-    background-image: url(/photos/2008406.jpg);
+/*background-image: url(/photos/2008406.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    background-position: center center;
-    margin: 0;
+    background-position: center center;*/
 
+body{
+    font-family: 'Bangers', cursive;
+    background-color: wheat;
 }
 
 .title-principal,.boton-seleccionar-config{
@@ -42,7 +41,7 @@ body{
     width: 350px;
     font-size: 40px;
     border-radius: 20px;
-    margin-top: 5px;
+    margin: 0;
     border: 3px solid var(--color-background);
     color: var(--color-primary);
     background-color: var(--color-secundary);
@@ -50,7 +49,7 @@ body{
     justify-content: center;
 }
 
-.seleccionar-boxeador-css{
+.seleccionar-boxeador-css, .mapa-botones{
     display: flex;    
     justify-content: center;
     align-items: center;
@@ -75,11 +74,13 @@ body{
     border-radius: 20px;
     margin-top: 18px;
     font-family: 'Bangers',cursive;
+    border: 3px solid var(--color-background);
     background-color: var(--color-secundary);
     color: var(--color-primary);
 }
 
-#seleccionar-ataque{
+#seleccionar-ataque, .botones-movimiento{
+    display: flex;
     flex-direction: column;
     align-items: center;  
 }
@@ -168,6 +169,33 @@ input{
 input:checked + label{
     background-color:#DC5F00;
     color:#EEEEEE;
+}
+
+#ver-mapa{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#map {
+    border: 2px solid black;
+}
+
+
+
+.title-canvas{
+    width: 650px;
+    height: 45px;
+    font-size: 35px;
+    border-radius: 20px;
+    margin-top: 10px;
+    margin: 1%;
+    border: 3px solid var(--color-background);
+    color: var(--color-primary);
+    background-color: var(--color-secundary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (max-width: 360px ){

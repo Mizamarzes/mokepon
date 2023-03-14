@@ -22,34 +22,69 @@ const botonReiniciar = document.getElementById("reiniciar")
 const contenedorTarjetas = document.getElementById("seleccionarBoxeador")
 const contenedorAtaques = document.getElementById("contenedorAtaques")
 
+const sectionVerMap = document.getElementById("ver-mapa")
+const mapa = document.getElementById("map")
+
 let boxeadores = []
 let ataqueJugador = []
-let ataqueEnemigo
+let ataqueEnemigo = []
 let opcionDeBoxeadores 
 let inputIppo
 let inputTakamura
 let inputMiyata
 let boxeadorJugador
+let boxeadorJugadorObjeto
 let ataquesboxeadores
+let ataquesBoxeadorEnemigo
 let botonJab 
 let botonUppercut 
 let botonContraataque
 let botones = [] 
+let indexAtaqueJugador
+let indexAtaqueEnemigo
+let victoriasJugador = 0
+let victoriasEnemigo = 0 
 let vidasJugador = 3
 let vidasEnemigo = 3
+let lienzo = mapa.getContext("2d")
+let intervalo 
+let mapaBackground = new Image()
+mapaBackground.src = "./photos/imagenFondo.jpg"
 
 class Boxeadores{
-    constructor(nombre, foto, vidas){
+    constructor(nombre, foto, vidas, fotoMapa, x = 10, y = 500){
         this.nombre = nombre
         this.foto = foto
         this.vidas = vidas
         this.ataques = []
+        this.x = x
+        this.y = y
+        this.ancho = 100
+        this.alto = 100
+        this.mapaFoto = new Image()
+        this.mapaFoto.src = fotoMapa
+        this.velocidadX = 0
+        this.velocidadY = 0
+    }
+
+    pintarBoxeador(){
+        lienzo.drawImage(
+            this.mapaFoto,
+            this.x,
+            this.y,
+            this.ancho,
+            this.alto
+        )
     }
 }
 
-let ippo = new Boxeadores("Ippo", "./photos/ippo.webp", 5 )
-let takamura = new Boxeadores("Takamura", "./photos/takamura.webp", 5 )
-let miyata = new Boxeadores("Miyata", "./photos/miyata.webp", 5 )
+let ippo = new Boxeadores("Ippo", "./photos/ippo.webp", 5, "./photos/ippo.webp")
+let takamura = new Boxeadores("Takamura", "./photos/takamura.webp", 5, "./photos/takamura.webp")
+let miyata = new Boxeadores("Miyata", "./photos/miyata.webp", 5, "./photos/miyata.webp")
+
+let ippoEnemigo = new Boxeadores("Ippo", "./photos/ippo.webp", 5, "./photos/ippo.webp", 60, 100)
+let takamuraEnemigo = new Boxeadores("Takamura", "./photos/takamura.webp", 5, "./photos/takamura.webp", 600, 80)
+let miyataEnemigo = new Boxeadores("Miyata", "./photos/miyata.webp", 5, "./photos/miyata.webp", 300, 250 )
 
 ippo.ataques.push(
     {nombre: "Uppercut", id: "boton-uppercut"},  
@@ -78,6 +113,8 @@ miyata.ataques.push(
 boxeadores.push(ippo,takamura,miyata)
 
 function iniciarjuego(){
+
+    sectionVerMap.style.display = "none"
 
     boxeadores.forEach((boxeador) =>{
        opcionDeBoxeadores = `
@@ -108,7 +145,9 @@ function seleccionar(){
     sectionelige.style.display = "none"
     sectionMascota.style.display = "none"
     sectionseleccion.style.display = "none"
-    sectionAtaque.style.display = "flex"
+
+    //sectionAtaque.style.display = "flex"
+    
 
     if (inputIppo.checked){
         spanMascotaJugador.innerHTML = inputIppo.id
@@ -127,6 +166,8 @@ function seleccionar(){
         reiniciarGame()
     }
     extraerAtaques(boxeadorJugador)
+    sectionVerMap.style.display = "flex"
+    iniciarMapa()
     seleccionarEnemigo()
 }
 
@@ -136,8 +177,6 @@ function extraerAtaques(boxeadorJugador){
         if (boxeadorJugador === boxeadores[i].nombre) {
             ataques = boxeadores[i].ataques
         }
-       
-        
     }
     mostrarAtaques(ataques)
 }
@@ -161,66 +200,88 @@ function secuenciaAtaque(){
             if (e.target.textContent === "Uppercut") {
                 ataqueJugador.push("Uppercut")
                 console.log(ataqueJugador)
-                boton.style.background = "#112f58"    
+                boton.style.background = "#112f58"
+                boton.disabled = true    
             } else if(e.target.textContent === "Contraataque"){
                 ataqueJugador.push("Contraataque")
                 console.log(ataqueJugador)
-                boton.style.background = "#112f58"  
+                boton.style.background = "#112f58" 
+                boton.disabled = true  
             } else{
                 ataqueJugador.push("Jab")
                 console.log(ataqueJugador)
                 boton.style.background = "#112f58"  
+                boton.disabled = true 
             }
+            ataqueRandomDelEnemigo()
         })
     })
+    
 }
 
 function seleccionarEnemigo(){
     let numrandom = aleatorio(0,boxeadores.length-1)
 
     spanMascotaEnemigo.innerHTML = boxeadores[numrandom].nombre
+    ataquesBoxeadorEnemigo = boxeadores[numrandom].ataques
     secuenciaAtaque()
 }
 
-function aleatorio(min,max){
-    return Math.floor(Math.random()*(max - min + 1)+ min)
+function ataqueRandomDelEnemigo(){
+    let ataqueAleatorio = aleatorio(0,ataquesBoxeadorEnemigo.length -1)
+    
+    if (ataqueAleatorio == 0 || ataqueAleatorio == 1) {
+       ataqueEnemigo.push("Uppercut")
+    } else if(ataqueAleatorio == 3 || ataqueAleatorio == 4) {
+        ataqueEnemigo.push("Contraataque")
+    } else {
+        ataqueEnemigo.push("Jab")
+    }
+    console.log(ataqueEnemigo)
+    iniciarPelea()
 }
 
+function iniciarPelea(){
+    if (ataqueJugador.length === 5) {
+        combate()
+    }    
+}
 
-
-function ataqueRandomDelEnemigo(){
-    let ataqueAleatorio = aleatorio(1,3)
-    
-    if (ataqueAleatorio == 1) {
-       ataqueEnemigo= "Uppercut"
-    } else if(ataqueAleatorio == 2) {
-        ataqueEnemigo= "Contraataque"
-    } else {
-        ataqueEnemigo= "Jab"
-    }
-    combate()
+function indexAmbosEnemigos(jugador, enemigo){
+    indexAtaqueJugador = ataqueJugador[jugador]
+    indexAtaqueEnemigo = ataqueEnemigo[enemigo]
 }
 
 function combate(){
-    if(ataqueEnemigo == ataqueJugador) {
-        crearMensaje("EMPATE")
-    }else if((ataqueJugador=="Uppercut" && ataqueEnemigo == "Contraataque")||(ataqueJugador=="Contraataque" && ataqueEnemigo =="Jab")||(ataqueJugador=="Jab" && ataqueEnemigo=="Uppercut")){
-        crearMensaje("GANASTE")
-        vidasEnemigo--
-        spanVidasEnemigo.innerHTML = vidasEnemigo
-    }else{
-        crearMensaje("PERDISTE")
-        vidasJugador--
-        spanVidasJugador.innerHTML = vidasJugador 
-    }     
-    revisarvidas()
+
+    for (let index = 0; index < ataqueJugador.length; index++) {
+        if(ataqueJugador[index] === ataqueEnemigo[index]){
+            indexAmbosEnemigos(index, index)
+            crearMensaje("EMPATE")
+        } else if(ataqueJugador[index] === "Uppercut" && ataqueEnemigo[index] == "Contraataque" || 
+        ataqueJugador[index] === "Contraataque" && ataqueEnemigo[index] === "Jab" || 
+        ataqueJugador[index] === "Jab" && ataqueEnemigo[index] === "Uppercut"){
+            indexAmbosEnemigos(index, index)
+            crearMensaje("GANASTE")
+            victoriasJugador++
+            spanVidasJugador.innerHTML = victoriasJugador
+        } else{
+            indexAmbosEnemigos(index, index)
+            crearMensaje("PERDISTE")
+            victoriasEnemigo++
+            spanVidasEnemigo.innerHTML = victoriasEnemigo
+        }   
+    }  
+    revisarvictorias()
 }
 
-function revisarvidas(){
-    if(vidasEnemigo == 0){
-       crearMensajeFinal("Ganaste, que bendicion ve")
-    } else if(vidasJugador == 0){
-       crearMensajeFinal("Perdiste, :C") 
+function revisarvictorias(){
+    if(victoriasJugador === victoriasEnemigo){
+       crearMensajeFinal("Tremendo Empate xde")
+    } else if(victoriasJugador > victoriasEnemigo){
+       crearMensajeFinal("Ganamosss :)") 
+    } else {
+        crearMensajeFinal("Perdiste :C ")
     }
 }
 
@@ -229,8 +290,8 @@ function crearMensaje(resultado){
     let nuevoAtaqueDelEnemigo=document.createElement("h3")
 
     sectionMensajes.innerHTML = resultado
-    nuevoAtaqueDelJugador.innerHTML = ataqueJugador
-    nuevoAtaqueDelEnemigo.innerHTML = ataqueEnemigo
+    nuevoAtaqueDelJugador.innerHTML = indexAtaqueJugador
+    nuevoAtaqueDelEnemigo.innerHTML = indexAtaqueEnemigo
 
     ataquesDelEnemigo.appendChild(nuevoAtaqueDelEnemigo)    
     ataquesDelJugador.appendChild(nuevoAtaqueDelJugador)
@@ -238,11 +299,6 @@ function crearMensaje(resultado){
 
 function crearMensajeFinal(resultadoFinal) {
     sectionMensajes.innerHTML = resultadoFinal
-    
-    botonUppercut.disabled = true
-    botonContraataque.disabled = true
-    botonJab.disabled = true
-
     botonReiniciar.style.display = "block"
 }
 
@@ -250,4 +306,95 @@ function reiniciarGame(){
     location.reload()
 }
 
+function aleatorio(min,max){
+    return Math.floor(Math.random()*(max - min + 1)+ min)
+}
+
+function pintarCanvas(){
+    boxeadorJugadorObjeto.x = boxeadorJugadorObjeto.x + boxeadorJugadorObjeto.velocidadX
+    boxeadorJugadorObjeto.y = boxeadorJugadorObjeto.y + boxeadorJugadorObjeto.velocidadY
+    lienzo.clearRect(0,0, mapa.width, mapa.height)
+    lienzo.drawImage(
+        mapaBackground,
+        0,
+        0,
+        mapa.width,
+        mapa.height
+    )
+    boxeadorJugadorObjeto.pintarBoxeador()
+    ippoEnemigo.pintarBoxeador()
+    takamuraEnemigo.pintarBoxeador()
+    miyataEnemigo.pintarBoxeador()
+}
+
+function moverDerecha(){
+    boxeadorJugadorObjeto.velocidadX = 5
+}
+
+function moverIzquierda(){
+    boxeadorJugadorObjeto.velocidadX = -5
+}
+
+function moverArriba(){
+    boxeadorJugadorObjeto.velocidadY = -5
+}
+
+function moverAbajo(){
+    boxeadorJugadorObjeto.velocidadY = 5
+}
+
+function detenerMovimiento(){
+    boxeadorJugadorObjeto.velocidadX = 0
+    boxeadorJugadorObjeto.velocidadY = 0
+    botonArriba.style.background = "white"
+    botonAbajo.style.background = "white"
+    botonIzquierda.style.background = "white"
+    botonDerecha.style.background = "white"  
+    
+}
+
+function sePresionoTecla(event){
+    switch (event.key) {
+        case"ArrowUp":
+        case"w":
+            moverArriba()
+            botonArriba.style.background = "#FCE22A"            
+            break
+        case"ArrowDown":
+        case"s":
+            moverAbajo()
+            botonAbajo.style.background = "#FCE22A"             
+            break            
+        case"ArrowLeft":
+        case"a":
+            moverIzquierda()
+            botonIzquierda.style.background = "#FCE22A"             
+            break 
+        case"ArrowRight":
+        case"d":
+            moverDerecha()
+            botonDerecha.style.background = "#FCE22A"            
+            break        
+        default:
+            break;
+    }
+}
+
+function iniciarMapa() {
+    mapa.width = 800
+    mapa.height = 600
+    boxeadorJugadorObjeto = obtenerObjetoBoxeador(boxeadorJugador)
+    intervalo = setInterval(pintarCanvas, 50)
+    window.addEventListener("keydown", sePresionoTecla)
+    window.addEventListener("keyup", detenerMovimiento)
+    
+}
+
+function obtenerObjetoBoxeador(){
+    for (let i = 0; i < boxeadores.length; i++) {
+        if (boxeadorJugador === boxeadores[i].nombre) {
+            return boxeadores[i]
+        }
+    }
+}
 window.addEventListener("load", iniciarjuego)

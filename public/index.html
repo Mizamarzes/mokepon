@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>JUEGO</title>
+    <link rel = "stylesheet" href ="estilo.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+</head>
+<body>
+    <div class="title-principal">
+        <h1 id= "titlePrincipal" class= "titulo"> Boxing gym</h1>      
+        <h2 id="eligePeleador" class= "recuadro-elige">Elige:</h2>
+    </div>  
+
+        <div id="seleccionarBoxeador" class="seleccionar-boxeador-css">
+
+        </div>
+
+        <div class="boton-seleccionar-config">         
+            <button class="diseñoBoton-seleccionar" id="boton-seleccionar">Seleccionar</button>
+        </div>
+        
+        <section id="ver-mapa">
+            <h1 class= "title-canvas"> Recorre el mapa con tu boxeador</h1>
+        <div class="mapa-botones">
+            <div class="botones-movimiento">
+                <button id="botonArriba" onmouseup="detenerMovimiento()" onmousedown="moverArriba()" ontouchend = "detenerMovimiento()" ontouchstart="moverArriba()">Arriba</button>
+                <div>
+                    <button id="botonIzquierda" onmouseup="detenerMovimiento()" onmousedown="moverIzquierda()" ontouchend = "detenerMovimiento()" ontouchstart="moverIzquierda()">Izquierda</button>
+                    <button id="botonDerecha" onmouseup="detenerMovimiento()" onmousedown="moverDerecha()" ontouchend = "detenerMovimiento()" ontouchstart="moverDerecha()">Derecha</button>
+                </div>
+                <button id="botonAbajo" onmouseup="detenerMovimiento()" onmousedown="moverAbajo()" ontouchend = "detenerMovimiento()" ontouchstart="moverAbajo()">Abajo</button>
+            </div>
+            <canvas id="map" class="canvas-css"></canvas>
+        </div>
+        </section>
+
+        <section id="seleccionar-ataque">
+            <h2 class="recuadro-ataca">Selecciona tu ataque:</h2>
+
+            <div id='contenedorAtaques' class="tipos-ataques">
+                
+            </div>
+
+            <div id="mensajes">
+                <p id="resultado">!Mucha Suerte¡</p>   
+            </div>
+
+            <section id="reiniciar">
+                <button class = "volver-ajugar">Volver a Jugar</button>
+            </section>
+
+            <div class="ataques-insanos">
+                    <div class="ataques-jugador">
+                        <p class="mensajes-ataques" id="vidas-jugador">0</p>
+                        <p class="mensajes-ataques" id="boxeador-jugador"></p>    
+                        <div class="mensajes-ataques" id="ataques-del-jugador"></div>
+                    </div>
+                
+                    <div class="ataques-enemigo">
+                        <p class="mensajes-ataques" id="vidas-enemigo">0</p>
+                        <p class="mensajes-ataques" id="boxeador-enemigo"></p>
+                    <div class="mensajes-ataques" id="ataques-del-enemigo"></div>
+                    </div>
+                </div>
+            </section>
+        <script src = "mokepon.js"></script>    
+    </body>
+</html>

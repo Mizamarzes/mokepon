@@ -65,7 +65,6 @@ alturaApropiada = anchoDelMapa * 600 / 800
 mapa.width = anchoDelMapa
 mapa.height = alturaApropiada
 
-
 class Boxeadores{
     constructor(nombre, foto, vidas, fotoMapa, id = null){
         this.id = id
